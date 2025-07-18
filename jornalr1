@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornal R1 - A Experiência Definitiva</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilos Globais e Tema Escuro Premium */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #EAEAEA;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* --- Barra de Rolagem Customizada --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #E53E3E, #c32a2a);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #ff4d4d, #e53e3e);
+        }
+
+        /* --- Tela de Carregamento com Partículas --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0A0A0A;
+            z-index: 10001;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease-in-out;
+        }
+        #preloader.loaded {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #preloader-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* --- Animação de Texto Letra por Letra --- */
+        .animated-title span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            animation: reveal-char 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes reveal-char {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Animações de Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Efeito de Borda Iluminada nos Cards --- */
+        .premium-card {
+            background: rgba(17, 17, 17, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+        }
+        .premium-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+        .premium-card::before, .premium-card::after {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: -2px;
+            background: linear-gradient(45deg, #e53e3e, #9b2c2c, #0A0A0A, #0A0A0A, #9b2c2c, #e53e3e);
+            background-size: 400%;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            z-index: -1;
+            animation: steam 20s linear infinite;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+            border-radius: 1rem;
+        }
+        .premium-card:hover::before, .premium-card:hover::after {
+            opacity: 1;
+        }
+        @keyframes steam {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+        
+        /* --- Fundo "Gradiente Vivo" --- */
+        #background-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* --- Tela de Sucesso de Envio --- */
+        #submission-success {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #submission-success.visible {
+            opacity: 1;
+        }
+        .success-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #E53E3E;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .success-checkmark {
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: #E53E3E;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        #submission-success h3, #submission-success p {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease 1.2s forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Foguete de Scroll --- */
+        #scroll-rocket {
+            position: fixed;
+            bottom: 30px;
+            left: -100px; /* Começa fora da tela */
+            width: 50px;
+            height: 50px;
+            z-index: 55;
+            transition: transform 3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateX(0) rotate(-45deg);
+        }
+        #scroll-rocket.flying {
+            transform: translateX(110vw) rotate(0deg);
+        }
+
+        /* Cores de Destaque */
+        .highlight-red { color: #E53E3E; }
+        .bg-highlight-red { background-color: #E53E3E; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Tela de Carregamento -->
+    <div id="preloader">
+        <canvas id="preloader-canvas"></canvas>
+    </div>
+
+    <!-- Fundo de Gradiente Vivo -->
+    <canvas id="background-canvas"></canvas>
+
+    <!-- Foguete de Scroll -->
+    <div id="scroll-rocket">
+        <svg viewBox="0 0 24 24" fill="#E53E3E" xmlns="http://www.w3.org/2000/svg"><path d="M21.56,11.28l-5-2.27a1,1,0,0,0-1.11.43l-3,5.2a.5.5,0,0,1-.87,0l-3-5.2a1,1,0,0,0-1.11-.43l-5,2.27A1,1,0,0,0,2,13.23l7.44,10.13a1,1,0,0,0,1.71.05l7.46-10.13A1,1,0,0,0,21.56,11.28Z"/><path d="M12,12.45,9.4,8.27a1,1,0,0,1,1.38-1.16l4.4,2.2a1,1,0,0,1,0,1.78l-4.4,2.2A1,1,0,0,1,9.4,8.27Z" opacity=".5"/><path d="M12.59,1.05,11.2,3.43a1,1,0,0,1-1.38,0L8.41,1.05a1,1,0,0,1,1-1.71h3.18A1,1,0,0,1,12.59,1.05Z"/></svg>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://i.imgur.com/ormXJbf.png" alt="Logo Jornal R1" class="h-10 w-10 mr-3">
+                <span class="text-xl font-bold text-white">Jornal R1</span>
+            </div>
+            <nav>
+                <a href="#planos" class="text-gray-300 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Planos</a>
+                <a href="#contato" class="bg-highlight-red text-white px-5 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity transform hover:scale-105">Seja um Patrocinador</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section com Interação -->
+        <section class="min-h-screen flex items-center justify-center text-center overflow-hidden">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="reveal">
+                    <h1 class="text-5xl md:text-7xl font-black text-white leading-tight mb-4">
+                        <span class="block animated-title">Conectando Histórias,</span>
+                        <span class="block highlight-red animated-title">Impulsionando Organizações.</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8">
+                        Uma experiência imersiva para dar voz e visibilidade à sua organização no Habbo Hotel.
+                    </p>
+                    <a href="#planos" class="bg-highlight-red text-white px-8 py-4 rounded-full text-lg font-bold hover:opacity-90 transition-transform transform hover:scale-105 inline-block">
+                        Descubra o Poder do Patrocínio
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção "Por que apoiar?" -->
+        <section class="py-24 relative z-10">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white animated-title">Um Patrocínio Estratégico</h2>
+                    <p class="text-gray-400 mt-3 max-w-2xl mx-auto">Mais que um apoio, um investimento no futuro da sua marca.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="premium-card p-8 rounded-2xl text-center reveal" style="transition-delay: 100ms;">
+                        <div class="flex justify-center mb-4"><svg class="w-12 h-12 highlight-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Visibilidade Máxima</h3>
+                        <p class="text-gray-400">Alcance um público amplo e engajado com matérias e divulgações de alto impacto.</p>
+                    </div>
+                    <div class="premium-card p-8 rounded-2xl text-center reveal" style="transition-delay: 200ms;">
+                        <div class="flex justify-center mb-4"><svg class="w-12 h-12 highlight-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg></div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Marca de Prestígio</h3>
+                        <p class="text-gray-400">Associe sua organização a um jornalismo de qualidade, consolidando uma imagem de liderança.</p>
+                    </div>
+                    <div class="premium-card p-8 rounded-2xl text-center reveal" style="transition-delay: 300ms;">
+                        <div class="flex justify-center mb-4"><svg class="w-12 h-12 highlight-red" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+                         <h3 class="text-2xl font-bold text-white mb-3">Ecossistema Forte</h3>
+                        <p class="text-gray-400">Seu apoio é vital para a manutenção de uma plataforma moderna que beneficia toda a comunidade.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Planos -->
+        <section id="planos" class="py-24 relative z-10">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white animated-title">Planos de Patrocínio</h2>
+                    <p class="text-gray-400 mt-3">Desenvolvidos para impulsionar sua organização ao próximo nível.</p>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Cards de Planos -->
+                    <div class="premium-card p-8 rounded-2xl flex flex-col reveal">
+                        <h3 class="text-3xl font-bold highlight-red">Bronze</h3>
+                        <p class="text-gray-400 mb-6">Presença constante e de qualidade.</p>
+                        <div class="text-5xl font-black text-white mb-6">50c<span class="text-lg font-medium text-gray-400">/mês</span></div>
+                        <ul class="space-y-4 text-gray-300 flex-grow">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Banner rotativo no site</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>1 Matéria completa/mês</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Cargo "Patrocinador Bronze"</li>
+                        </ul>
+                        <button data-plan="Bronze" class="selecionar-plano mt-8 block w-full text-center bg-gray-700/50 border border-gray-600 text-white font-bold py-3 rounded-lg hover:bg-gray-600/50 transition-colors">Selecionar Plano</button>
+                    </div>
+                    <div class="premium-card p-8 rounded-2xl relative flex flex-col reveal border-red-500/50" style="transition-delay: 150ms;">
+                         <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-highlight-red text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Mais Popular</div>
+                        <h3 class="text-3xl font-bold highlight-red">Prata</h3>
+                        <p class="text-gray-400 mb-6">O melhor custo-benefício.</p>
+                        <div class="text-5xl font-black text-white mb-6">130c<span class="text-lg font-medium text-gray-400">/trimestre</span></div>
+                        <ul class="space-y-4 text-gray-300 flex-grow">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Todos os benefícios do Bronze</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>2 Matérias completas/mês</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Divulgação em stories</li>
+                        </ul>
+                        <button data-plan="Prata" class="selecionar-plano mt-8 block w-full text-center bg-highlight-red text-white font-bold py-3 rounded-lg hover:opacity-90 transition-opacity">Selecionar Plano</button>
+                    </div>
+                    <div class="premium-card p-8 rounded-2xl flex flex-col reveal" style="transition-delay: 300ms;">
+                        <h3 class="text-3xl font-bold highlight-red">Ouro</h3>
+                        <p class="text-gray-400 mb-6">Visibilidade e exclusividade máximas.</p>
+                        <div class="text-5xl font-black text-white mb-6">500c<span class="text-lg font-medium text-gray-400">/ano</span></div>
+                        <ul class="space-y-4 text-gray-300 flex-grow">
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Todos os benefícios do Prata</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>4 Matérias completas/mês</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Painel de informações fixo</li>
+                        </ul>
+                        <button data-plan="Ouro" class="selecionar-plano mt-8 block w-full text-center bg-gray-700/50 border border-gray-600 text-white font-bold py-3 rounded-lg hover:bg-gray-600/50 transition-colors">Selecionar Plano</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Opções Avulsas -->
+        <section id="avulsos" class="py-24 relative z-10">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white animated-title">Opções Avulsas</h2>
+                    <p class="text-gray-400 mt-3">Contrate serviços isolados para ações pontuais.</p>
+                </div>
+                <div class="max-w-4xl mx-auto bg-black/30 backdrop-blur-md rounded-2xl p-4 md:p-8 reveal">
+                    <div class="space-y-4">
+                        <!-- Header -->
+                        <div class="hidden md:grid grid-cols-3 gap-4 font-bold text-gray-400 uppercase text-sm px-4">
+                            <span>Serviço</span>
+                            <span>Descrição</span>
+                            <span class="text-right">Valor</span>
+                        </div>
+                        <!-- Item -->
+                        <div class="grid md:grid-cols-3 gap-4 items-center bg-gray-800/50 p-4 rounded-lg">
+                            <span class="font-bold text-white">Matéria Simples</span>
+                            <span class="text-gray-300 text-sm">Até 500 palavras + imagem padrão</span>
+                            <span class="font-bold text-lg text-right highlight-red">20c</span>
+                        </div>
+                        <!-- Item -->
+                        <div class="grid md:grid-cols-3 gap-4 items-center bg-gray-800/50 p-4 rounded-lg">
+                            <span class="font-bold text-white">Matéria Completa</span>
+                            <span class="text-gray-300 text-sm">Com design exclusivo + divulgação em feed + story</span>
+                            <span class="font-bold text-lg text-right highlight-red">35c</span>
+                        </div>
+                        <!-- Item -->
+                        <div class="grid md:grid-cols-3 gap-4 items-center bg-gray-800/50 p-4 rounded-lg">
+                            <span class="font-bold text-white">Banner no site</span>
+                            <span class="text-gray-300 text-sm">Banner rotativo com link personalizado</span>
+                            <span class="font-bold text-lg text-right highlight-red">30c</span>
+                        </div>
+                        <!-- Item -->
+                        <div class="grid md:grid-cols-3 gap-4 items-center bg-gray-800/50 p-4 rounded-lg">
+                            <span class="font-bold text-white">Design + Divulgação</span>
+                            <span class="text-gray-300 text-sm">Imagem exclusiva + feed + story</span>
+                            <span class="font-bold text-lg text-right highlight-red">50c</span>
+                        </div>
+                        <!-- Item -->
+                        <div class="grid md:grid-cols-3 gap-4 items-center bg-gray-800/50 p-4 rounded-lg">
+                            <span class="font-bold text-white">Combo Completo</span>
+                            <span class="text-gray-300 text-sm">Matéria + Story + Design com prioridade</span>
+                            <span class="font-bold text-lg text-right highlight-red">70c</span>
+                        </div>
+                         <!-- Item -->
+                        <div class="grid md:grid-cols-3 gap-4 items-center bg-gray-800/50 p-4 rounded-lg">
+                            <span class="font-bold text-white">Story Personalizado</span>
+                            <span class="text-gray-300 text-sm">Um story de divulgação no Instagram e Discord</span>
+                            <span class="font-bold text-lg text-right highlight-red">15c</span>
+                        </div>
+                         <!-- Item -->
+                        <div class="grid md:grid-cols-3 gap-4 items-center bg-gray-800/50 p-4 rounded-lg">
+                            <span class="font-bold text-white">Feed Patrocinado</span>
+                            <span class="text-gray-300 text-sm">Uma postagem de destaque no Instagram e Facebook</span>
+                            <span class="font-bold text-lg text-right highlight-red">25c</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Pagamento e Contato -->
+        <section id="pagamento" class="py-24 relative z-10">
+            <div class="container mx-auto px-6 text-center">
+                <div class="max-w-2xl mx-auto reveal">
+                    <h2 class="text-3xl font-bold text-white mb-4 animated-title">Pagamento e Contato</h2>
+                    <p class="text-gray-300 mb-6">
+                        Todos os pagamentos devem ser realizados diretamente com o Diretor do Jornal R1 para garantir a segurança da sua transação. Aceitamos Câmbios e PIX.
+                    </p>
+                    <div class="bg-gray-800/50 p-6 rounded-2xl inline-flex flex-col sm:flex-row gap-6">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3,3.5H3.7A1.2,1.2,0,0,0,2.5,4.7V19.3A1.2,1.2,0,0,0,3.7,20.5H20.3a1.2,1.2,0,0,0,1.2-1.2V4.7A1.2,1.2,0,0,0,20.3,3.5Zm-8.2,7.4a3.1,3.1,0,0,1-1.7.5,3.3,3.3,0,0,1-2.3-1,1,1,0,1,1,1.4-1.5,1.2,1.2,0,0,0,.9.4,1.1,1.1,0,0,0,1.1-1.1V4.7h1.6v6.2A3.1,3.1,0,0,1,12.1,10.9ZM8.2,16.8a3.1,3.1,0,0,1-1.7.5,3.3,3.3,0,0,1-2.3-1,1,1,0,0,1,1.4-1.5,1.2,1.2,0,0,0,.9.4,1.1,1.1,0,0,0,1.1-1.1V10h1.6v6.2A3.1,3.1,0,0,1,8.2,16.8Zm8.2,0a3.1,3.1,0,0,1-1.7.5,3.3,3.3,0,0,1-2.3-1,1,1,0,1,1,1.4-1.5,1.2,1.2,0,0,0,.9.4,1.1,1.1,0,0,0,1.1-1.1V10h1.6v6.2A3.1,3.1,0,0,1,16.4,16.8Z"/></svg>
+                            <span class="text-lg">Habbo: <span class="font-bold highlight-red">CVitor...</span></span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3,3.5H3.7A1.2,1.2,0,0,0,2.5,4.7V19.3A1.2,1.2,0,0,0,3.7,20.5H20.3a1.2,1.2,0,0,0,1.2-1.2V4.7A1.2,1.2,0,0,0,20.3,3.5ZM9.4,16.8a1.6,1.6,0,1,1,1.6-1.6A1.6,1.6,0,0,1,9.4,16.8Zm5.2,0a1.6,1.6,0,1,1,1.6-1.6A1.6,1.6,0,0,1,14.6,16.8Zm-3.5-4.1a5.2,5.2,0,0,1-4.2-2.1,1,1,0,1,1,1.5-1.3,3.2,3.2,0,0,0,5.4,0,1,1,0,1,1,1.5,1.3A5.2,5.2,0,0,1,11.1,12.7Z"/></svg>
+                            <span class="text-lg">Discord: <span class="font-bold highlight-red">cvitorsp</span></span>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <a href="https://teste.com" target="_blank" class="text-gray-400 hover:text-white underline transition-colors">
+                            Deseja ler os termos e condições do Jornal R1?
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Contato -->
+        <section id="contato" class="pb-24 pt-12 relative z-10">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white animated-title">Solicite seu Patrocínio</h2>
+                    <p class="text-gray-400 mt-3">Preencha o formulário e nossa equipe retornará o mais breve possível.</p>
+                </div>
+                <div class="max-w-2xl mx-auto premium-card p-8 rounded-2xl reveal">
+                    <form id="contact-form">
+                        <div class="grid md:grid-cols-2 gap-6 mb-4">
+                            <div>
+                                <label for="nome" class="block text-gray-300 mb-2 font-bold">Seu nome no jogo</label>
+                                <input type="text" id="nome" name="nome" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500/50 transition-colors" required>
+                            </div>
+                            <div>
+                                <label for="instituicao" class="block text-gray-300 mb-2 font-bold">Instituição</label>
+                                <input type="text" id="instituicao" name="instituicao" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500/50 transition-colors" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-300 mb-2 font-bold">Seu E-mail</label>
+                            <input type="email" id="email" name="email" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500/50 transition-colors" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="contato-social" class="block text-gray-300 mb-2 font-bold">WhatsApp ou Discord</label>
+                            <input type="text" id="contato-social" name="contato-social" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500/50 transition-colors" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="observacao" class="block text-gray-300 mb-2 font-bold">Observação (opcional)</label>
+                            <textarea id="observacao" name="observacao" rows="4" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500/50 transition-colors"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="w-full bg-highlight-red text-white font-bold py-4 px-8 rounded-lg hover:opacity-90 transition-all transform hover:scale-105">
+                                Enviar Solicitação
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Tela de Sucesso de Envio -->
+    <div id="submission-success" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[10002] flex items-center justify-center">
+        <div class="text-center">
+            <svg class="w-24 h-24 mx-auto" viewBox="0 0 52 52">
+                <circle class="success-circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="success-checkmark" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            <h3 class="text-3xl font-bold text-white mt-6">Enviado com Sucesso!</h3>
+            <p class="text-gray-300 mt-2">Obrigado pelo seu interesse.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-900/50 relative z-10">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-600">
+            <p>&copy; 2024 - Gestão do Jornal R1. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+    // --- SCRIPT GERAL ---
+    window.addEventListener('load', () => {
+
+        // --- PRELOADER DE PARTÍCULAS ---
+        const preloader = document.getElementById('preloader');
+        const canvas = document.getElementById('preloader-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 100 };
+
+        function setupCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setupCanvas();
+
+        class Particle {
+            constructor(x, y) {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.baseX = x;
+                this.baseY = y;
+                this.density = (Math.random() * 30) + 1;
+                this.color = '#E53E3E';
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+            update() {
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                let forceDirectionX = dx / distance;
+                let forceDirectionY = dy / distance;
+                let maxDistance = mouse.radius;
+                let force = (maxDistance - distance) / maxDistance;
+                let directionX = (forceDirectionX * force * this.density);
+                let directionY = (forceDirectionY * force * this.density);
+
+                if (distance < mouse.radius) {
+                    this.x -= directionX;
+                    this.y -= directionY;
+                } else {
+                    if (this.x !== this.baseX) {
+                        let dx = this.x - this.baseX;
+                        this.x -= dx / 10;
+                    }
+                    if (this.y !== this.baseY) {
+                        let dy = this.y - this.baseY;
+                        this.y -= dy / 10;
+                    }
+                }
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            if (canvas.width <= 0 || canvas.height <= 0) {
+                return;
+            }
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 120px Inter';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('R1', canvas.width / 2, canvas.height / 2);
+            const textCoordinates = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let y = 0, y2 = textCoordinates.height; y < y2; y++) {
+                for (let x = 0, x2 = textCoordinates.width; x < x2; x++) {
+                    if (textCoordinates.data[(y * 4 * textCoordinates.width) + (x * 4) + 3] > 128) {
+                        particles.push(new Particle(x, y));
+                    }
+                }
+            }
+        }
+
+        function animatePreloader() {
+            if (particles.length === 0 && canvas.width > 0) {
+                initParticles();
+            }
+            if (!preloader.classList.contains('loaded')) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].draw();
+                    particles[i].update();
+                }
+                requestAnimationFrame(animatePreloader);
+            }
+        }
+
+        animatePreloader();
+        
+        setTimeout(() => {
+            preloader.classList.add('loaded');
+        }, 2500);
+
+        // --- NOVO FUNDO "GRADIENTE VIVO" ---
+        const bgCanvas = document.getElementById('background-canvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        let time = 0;
+        
+        function setupBgCanvas() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+        }
+        setupBgCanvas();
+
+        function animateBg() {
+            let grad1 = bgCtx.createLinearGradient(0, 0, bgCanvas.width, bgCanvas.height);
+            grad1.addColorStop(0, '#1a0000');
+            grad1.addColorStop(1, '#0A0A0A');
+
+            let grad2 = bgCtx.createLinearGradient(0, bgCanvas.height, bgCanvas.width, 0);
+            grad2.addColorStop(0, '#3d0f0f');
+            grad2.addColorStop(1, '#0A0A0A');
+            
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            
+            bgCtx.globalCompositeOperation = 'source-over';
+            bgCtx.fillStyle = grad1;
+            bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+            bgCtx.globalCompositeOperation = 'lighter';
+            
+            let x = bgCanvas.width / 2 + Math.sin(time * 0.001) * bgCanvas.width * 0.3;
+            let y = bgCanvas.height / 2 + Math.cos(time * 0.0012) * bgCanvas.height * 0.3;
+            
+            let grad3 = bgCtx.createRadialGradient(x, y, 0, x, y, bgCanvas.width * 0.5);
+            grad3.addColorStop(0, 'rgba(155, 44, 44, 0.2)');
+            grad3.addColorStop(1, 'rgba(155, 44, 44, 0)');
+            bgCtx.fillStyle = grad3;
+            bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+            time++;
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        // --- FOGUETE DE SCROLL ---
+        const rocket = document.getElementById('scroll-rocket');
+        let rocketHasFlown = false;
+
+        window.addEventListener('scroll', () => {
+            const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            if (scrollPercent > 0.05 && !rocketHasFlown) { // Dispara mais cedo
+                rocketHasFlown = true;
+                rocket.classList.add('flying');
+            }
+        }, { passive: true });
+
+
+        // --- ANIMAÇÃO DE TEXTO ---
+        const animatedTitles = document.querySelectorAll('.animated-title');
+        const titleObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const title = entry.target;
+                    if (title.classList.contains('is-animated')) return;
+
+                    title.classList.add('is-animated');
+                    const text = title.textContent;
+                    const chars = text.split('').map(char => `<span>${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+                    title.innerHTML = chars;
+                    const spans = title.querySelectorAll('span');
+                    spans.forEach((span, index) => {
+                        const isSecondLine = title.parentElement.children.length > 1 && title === title.parentElement.children[1];
+                        const delay = isSecondLine ? 0.4 : 0;
+                        span.style.animationDelay = `${delay + (index * 0.035)}s`;
+                    });
+                    titleObserver.unobserve(title);
+                }
+            });
+        }, { threshold: 0.5 });
+        animatedTitles.forEach(title => titleObserver.observe(title));
+
+
+        // --- SCROLL REVEAL ---
+        const scrollElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        scrollElements.forEach(el => observer.observe(el));
+
+        // --- BRILHO INTERATIVO NOS CARDS ---
+        const cards = document.querySelectorAll('.premium-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            });
+        });
+
+        // --- FORMULÁRIO E BOTÕES DE PLANO ---
+        const contactForm = document.getElementById('contact-form');
+        const successOverlay = document.getElementById('submission-success');
+        const observacaoTextarea = document.getElementById('observacao');
+        const selecionarPlanoButtons = document.querySelectorAll('.selecionar-plano');
+        
+        selecionarPlanoButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const plan = button.dataset.plan;
+                observacaoTextarea.value = `Tenho interesse no Plano ${plan}.`;
+                document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
+                observacaoTextarea.focus();
+            });
+        });
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            successOverlay.classList.remove('hidden');
+            setTimeout(() => successOverlay.classList.add('visible'), 10);
+            
+            // Simula o envio para um backend.
+            // Aqui você poderia adicionar uma chamada fetch() para um servidor real.
+            
+            setTimeout(() => {
+                successOverlay.classList.remove('visible');
+                setTimeout(() => {
+                    successOverlay.classList.add('hidden');
+                    contactForm.reset();
+                }, 500);
+
+            }, 3000); // Mostra a tela de sucesso por 3 segundos.
+        });
+        
+        // --- SCROLL SUAVE ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // --- AJUSTE DE CANVAS NO RESIZE ---
+        window.addEventListener('resize', () => {
+            setupCanvas();
+            initParticles();
+            setupBgCanvas();
+        });
+    });
+    </script>
+</body>
+</html>
