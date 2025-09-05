@@ -194,6 +194,23 @@
             transform: translateX(110vw) rotate(0deg);
         }
 
+        /* --- Modal de Termos e Condições --- */
+        #terms-modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #terms-modal-content {
+            transition: transform 0.3s ease-in-out;
+            transform: scale(0.95);
+        }
+        #terms-modal.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        #terms-modal.visible #terms-modal-content {
+            transform: scale(1);
+        }
+
+
         /* Cores de Destaque */
         .highlight-red { color: #E53E3E; }
         .bg-highlight-red { background-color: #E53E3E; }
@@ -288,9 +305,9 @@
                         <h3 class="text-3xl font-bold" style="color: #FFD700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);">Ouro</h3>
                         <p class="text-gray-400 mb-6">Visibilidade e crescimento contínuo.</p>
                         <div class="mb-6">
-                            <span class="text-5xl font-black text-white">85c</span>
+                            <span class="text-5xl font-black text-white">R$ 16,99</span>
                             <span class="text-lg font-medium text-gray-400">/mês</span>
-                            <p class="text-base text-gray-500 font-normal mt-1">(R$ 16,99)</p>
+                            <p class="text-base text-gray-500 font-normal mt-1">(ou 85c)</p>
                         </div>
                         <ul class="space-y-4 text-gray-300 flex-grow">
                             <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Banner rotativo no site</li>
@@ -308,9 +325,9 @@
                         <h3 class="text-3xl font-bold" style="color: #60A5FA; text-shadow: 0 0 15px rgba(96, 165, 250, 0.5);">Safira</h3>
                         <p class="text-gray-400 mb-6">O melhor custo-benefício estratégico.</p>
                          <div class="mb-6">
-                            <span class="text-5xl font-black text-white">230c</span>
+                            <span class="text-5xl font-black text-white">R$ 45,99</span>
                             <span class="text-lg font-medium text-gray-400">/trimestre</span>
-                            <p class="text-base text-gray-500 font-normal mt-1">(ou R$ 45,99)</p>
+                            <p class="text-base text-gray-500 font-normal mt-1">(ou 230c)</p>
                         </div>
                         <ul class="space-y-4 text-gray-300 flex-grow">
                             <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Matéria completa sob demanda</li>
@@ -331,9 +348,9 @@
                         </div>
                         <p class="text-gray-400 mb-6">Parceria premium para máxima exclusividade.</p>
                          <div class="mb-6">
-                            <span class="text-5xl font-black text-white">820c</span>
+                            <span class="text-5xl font-black text-white">R$ 163,99</span>
                             <span class="text-lg font-medium text-gray-400">/ano</span>
-                            <p class="text-base text-gray-500 font-normal mt-1">(ou R$ 163,99)</p>
+                            <p class="text-base text-gray-500 font-normal mt-1">(ou 820c)</p>
                         </div>
                         <ul class="space-y-4 text-gray-300 flex-grow">
                             <li class="flex items-start font-bold"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Todos os benefícios anteriores</li>
@@ -434,9 +451,12 @@
                         </div>
                     </div>
                     <div class="mt-8">
-                        <a href="https://teste.com" target="_blank" class="text-gray-400 hover:text-white underline transition-colors">
-                            Deseja ler os termos e condições do Jornal R1?
-                        </a>
+                        <button id="open-terms-modal" class="inline-flex items-center gap-2 rounded-lg border border-gray-700 px-6 py-3 text-sm font-medium text-gray-400 transition-colors hover:bg-gray-800/50 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm2 1a1 1 0 011-1h6a1 1 0 011 1v1a1 1 0 01-1 1H7a1 1 0 01-1-1V5z" clip-rule="evenodd"></path>
+                            </svg>
+                            Ler Termos e Condições de Patrocínio
+                        </button>
                     </div>
                 </div>
             </div>
@@ -495,6 +515,98 @@
             <p class="text-gray-300 mt-2">Obrigado pelo seu interesse.</p>
         </div>
     </div>
+
+    <!-- Modal de Termos e Condições -->
+    <div id="terms-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[10002] flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div id="terms-modal-content" class="bg-gray-900/70 border border-gray-700 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-6 border-b border-gray-800">
+                <h2 class="text-2xl font-bold text-white">Termos e Condições</h2>
+                <button id="close-terms-modal" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-6 md:p-8 overflow-y-auto space-y-6 text-gray-300">
+                <p class="text-sm text-gray-500">Última Atualização: 28 de julho de 2025</p>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-2">Preâmbulo</h3>
+                    <p>O presente documento estabelece os Termos e Condições que regem a aquisição de pacotes de patrocínio, serviços avulsos e parcerias com o Jornal R1, uma organização de mídia independente atuante na comunidade do Habbo Hotel. Ao efetuar qualquer transação financeira com o Jornal R1, seja em moeda do jogo (Câmbios - "c") ou em moeda corrente (Reais - BRL), o indivíduo ou organização ("Patrocinador") declara ter lido, compreendido e concordado integralmente com todas as cláusulas aqui descritas.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-2">Artigo 1º - Natureza Jurídica e Independência</h3>
+                    <p class="pl-4"><strong>§ 1º.</strong> O Jornal R1 é uma entidade criada por jogadores, para jogadores, e <strong>NÃO POSSUI QUALQUER VÍNCULO OFICIAL, FILIAÇÃO, ASSOCIAÇÃO OU ENDOSSO</strong> por parte da Sulake Corporation, seus representantes ou dos proprietários do Habbo Hotel. Nossas atividades são independentes e autônomas.</p>
+                    <p class="pl-4"><strong>§ 2º.</strong> Toda a nossa operação, incluindo o site (r1habbo), o servidor no Discord e perfis em redes sociais, é mantida e administrada de forma independente pela nossa equipe.</p>
+                </div>
+                 <div>
+                    <h3 class="text-xl font-bold text-white mb-2">Artigo 2º - Natureza da Transação Financeira</h3>
+                    <p class="pl-4"><strong>§ 1º. DOAÇÃO NÃO REEMBOLSÁVEL:</strong> Todo e qualquer valor transacionado para o Jornal R1, seja em Câmbios (c) ou em Reais (BRL), é classificado, para todos os efeitos, como uma <strong>DOAÇÃO</strong>.</p>
+                    <p class="pl-4"><strong>§ 2º.</strong> Essas doações são destinadas integralmente à manutenção, crescimento e investimento nas operações do Jornal R1, incluindo custos de infraestrutura (site, bots), pagamento de equipe e realização de eventos.</p>
+                    <p class="pl-4"><strong>§ 3º.</strong> Por serem doações, os valores pagos <strong>NÃO SÃO REEMBOLSÁVEIS OU EXTORNÁVEIS</strong> sob nenhuma circunstância, incluindo, mas não se limitando a: descontinuação das atividades do Patrocinador, insatisfação com os resultados ou rescisão do plano por violação destes termos.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-2">Artigo 3º - Procedimentos de Pagamento e Venda</h3>
+                    <p class="pl-4"><strong>§ 1º. Canais Oficiais:</strong> As negociações e vendas de patrocínios são efetuadas <strong>EXCLUSIVAMENTE</strong> por membros da Diretoria e Subdiretoria do Jornal R1. O Jornal R1 não se responsabiliza por transações realizadas com membros não autorizados.</p>
+                    <p class="pl-4"><strong>§ 2º. Transações em Moeda Real (BRL):</strong> a) Os pagamentos em Reais (BRL) são realizados via PIX e são permitidos apenas para aquisições cujo valor em Câmbios seja igual ou superior a 50c. b) A taxa de conversão padrão é de R$ 0,20 (vinte centavos de Real) para cada 1 Câmbio (c). c) Todas as doações em Reais (BRL) devem ser transferidas <strong>UNICAMENTE</strong> para a chave PIX associada e informada pelo responsável geral do Jornal R1, C.Vitor… (João Vitor). O Jornal R1 não se responsabiliza por valores enviados a terceiros.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-2">Artigo 4º - Planos de Patrocínio Contínuo</h3>
+                    <p>Os seguintes planos oferecem um conjunto de benefícios durante o período de vigência contratado:</p>
+                    <div class="mt-4 space-y-4">
+                        <div class="bg-gray-800/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-white">Plano Mensal (Ouro): 85c ou R$ 16,99</h4>
+                            <ul class="list-disc list-inside text-sm mt-2">
+                                <li>Banner rotativo, Coberturas exclusivas (ilimitado), 1 Matéria completa (história, curiosidades ou algo referente à organização e não uma ação recente.).</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-white">Plano Trimestral (Safira): 230c ou R$ 45,99</h4>
+                            <ul class="list-disc list-inside text-sm mt-2">
+                                <li>Banner rotativo, Coberturas exclusivas (ilimitado), 2 Matérias completas por mês (história, curiosidades ou algo referente à organização e não uma ação recente.), tag diamante no discord, prioridade de suporte e anúncio no story.</li>
+                            </ul>
+                        </div>
+                         <div class="bg-gray-800/50 p-4 rounded-lg">
+                            <h4 class="font-bold text-white">Plano Decamestral (Rubi - 10 Meses + 2 bônus): 820c ou R$ 163,99</h4>
+                            <ul class="list-disc list-inside text-sm mt-2">
+                                <li>Todos os benefícios anteriores, mais: divulgações individuais por mês, reunião de alinhamento, eventos em conjunto, auxílio no marketing e relatório de engajamento trimestral.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                     <h3 class="text-xl font-bold text-white mb-2">Artigo 5º - Serviços Avulsos</h3>
+                     <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+                        <li><strong>Matéria Simples:</strong> 30c</li>
+                        <li><strong>Matéria Completa:</strong> 45c</li>
+                        <li><strong>Banner Fixo no Site (30 dias):</strong> 50c</li>
+                        <li><strong>Criação de Design + Divulgação:</strong> 70c</li>
+                        <li><strong>Combo Completo (Matéria Completa + Banner + Divulgação):</strong> 90c</li>
+                        <li><strong>Feed Patrocinado no Instagram (Post Fixo):</strong> 40c</li>
+                     </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-2">Artigo 6º - Regras e Obrigações do Patrocinador</h3>
+                     <p class="pl-4"><strong>§ 1º. Exclusividade:</strong> É estritamente <strong>PROIBIDO</strong> ao Patrocinador firmar parceria ou patrocínio similar com qualquer outro jornal ou agência de notícias concorrente dentro da comunidade do Habbo Hotel.</p>
+                     <p class="pl-4"><strong>§ 2º. Canal de Comunicação:</strong> Quaisquer situações, problemas, dúvidas ou crises envolvendo a parceria com o Jornal R1 devem ser tratados <strong>DIRETAMENTE</strong> e <strong>PRIVADAMENTE</strong> com a Diretoria do jornal. A exposição pública de questões internas poderá levar à rescisão imediata do contrato.</p>
+                     <p class="pl-4"><strong>§ 3º. Confidencialidade:</strong> Não é permitido ao Patrocinador divulgar, vazar ou compartilhar prévias, rascunhos ou informações sobre conteúdos (matérias, artes, etc.) antes da postagem oficial pelo Jornal R1.</p>
+                     <p class="pl-4"><strong>§ 4º. Violação:</strong> O descumprimento de qualquer uma das cláusulas deste artigo resultará na rescisão imediata do patrocínio, sem direito a qualquer tipo de reembolso ou extorno dos valores doados.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-2">Artigo 7º - Limitação de Solicitações</h3>
+                    <p>Com o objetivo de manter a qualidade e a viabilidade operacional para todos os nossos parceiros, o volume de solicitações (especialmente de matérias e designs) será gerenciado. Haverá uma limitação de pedidos, que será combinada e alinhada previamente com o Patrocinador, com base em seu perfil, plano e na capacidade produtiva da equipe do Jornal R1 no momento.</p>
+                </div>
+                <div>
+                     <h3 class="text-xl font-bold text-white mb-2">Artigo 9º - Termos de Uso da Plataforma Discord</h3>
+                     <p class="pl-4"><strong>§ 1º.</strong> O servidor do Jornal R1 no Discord é uma plataforma de comunidade. Todos os membros, incluindo patrocinadores, devem seguir as regras de conduta básicas: respeito mútuo, proibição de spam, conteúdo ilegal, discurso de ódio ou assédio.</p>
+                     <p class="pl-4"><strong>§ 2º. Isenção de Responsabilidade:</strong> O Jornal R1 não se responsabiliza pelo conteúdo gerado por usuários (mensagens, imagens, links), por interações privadas entre membros ou por quaisquer danos decorrentes do uso de nossa plataforma do Discord. A moderação atuará para coibir violações, mas a responsabilidade final pelo conteúdo e pelas ações é de quem os pratica.</p>
+                </div>
+                 <div>
+                    <h3 class="text-xl font-bold text-white mb-2">Artigo 10º - Aceitação dos Termos</h3>
+                    <p>Ao realizar uma doação e iniciar uma parceria com o Jornal R1, o Patrocinador e seus representantes legais confirmam que leram, compreenderam e aceitam incondicionalmente todos os artigos e parágrafos destes Termos e Condições.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 
     <!-- Footer -->
     <footer class="border-t border-gray-900/50 relative z-10">
@@ -720,12 +832,45 @@
         // --- SCROLL SUAVE ---
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const href = this.getAttribute('href');
+                if (href && href.length > 1) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
             });
         });
+
+        // --- LÓGICA DO MODAL DE TERMOS ---
+        const termsModal = document.getElementById('terms-modal');
+        const openTermsBtn = document.getElementById('open-terms-modal');
+        const closeTermsBtn = document.getElementById('close-terms-modal');
+
+        const openModal = () => {
+            termsModal.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeModal = () => {
+            termsModal.classList.remove('visible');
+            document.body.style.overflow = '';
+        };
+
+        openTermsBtn.addEventListener('click', (e) => {
+            openModal();
+        });
+
+        closeTermsBtn.addEventListener('click', closeModal);
+        termsModal.addEventListener('click', (e) => {
+            if (e.target === termsModal) {
+                closeModal();
+            }
+        });
+
 
         // --- AJUSTE DE CANVAS NO RESIZE ---
         window.addEventListener('resize', () => {
@@ -737,3 +882,5 @@
     </script>
 </body>
 </html>
+
+
