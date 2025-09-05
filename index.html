@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jornal R1 - A Experiência Definitiva</title>
+    <title>Jornal R1 - A Experiência Definitiva para Investidores</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -113,6 +113,10 @@
             opacity: 0;
             transition: opacity 0.4s ease-in-out;
             border-radius: 1rem;
+        }
+        .premium-card.safira-card:hover::before, .premium-card.safira-card:hover::after {
+             background: linear-gradient(45deg, #3b82f6, #1e40af, #0A0A0A, #0A0A0A, #1e40af, #3b82f6);
+             animation-duration: 15s;
         }
         .premium-card:hover::before, .premium-card:hover::after {
             opacity: 1;
@@ -277,49 +281,77 @@
                     <h2 class="text-4xl md:text-5xl font-bold text-white animated-title">Planos de Patrocínio</h2>
                     <p class="text-gray-400 mt-3">Desenvolvidos para impulsionar sua organização ao próximo nível.</p>
                 </div>
-                <div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    <!-- Cards de Planos -->
+                <div class="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+                    
+                    <!-- Plano Ouro -->
                     <div class="premium-card p-8 rounded-2xl flex flex-col reveal">
-                        <h3 class="text-3xl font-bold highlight-red">Bronze</h3>
-                        <p class="text-gray-400 mb-6">Presença constante e de qualidade.</p>
-                        <div class="text-5xl font-black text-white mb-6">85c<span class="text-lg font-medium text-gray-400">/mês</span></div>
+                        <h3 class="text-3xl font-bold" style="color: #FFD700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);">Ouro</h3>
+                        <p class="text-gray-400 mb-6">Visibilidade e crescimento contínuo.</p>
+                        <div class="mb-6">
+                            <span class="text-5xl font-black text-white">85c</span>
+                            <span class="text-lg font-medium text-gray-400">/mês</span>
+                            <p class="text-base text-gray-500 font-normal mt-1">(R$ 16,99)</p>
+                        </div>
                         <ul class="space-y-4 text-gray-300 flex-grow">
-                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Banner rotativo no site</li>
-<li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>coberturas exclusivas</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>1 Matéria completa/mês</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Cargo "Patrocinador Bronze"</li>
-                        </ul>
-                        <button data-plan="Bronze" class="selecionar-plano mt-8 block w-full text-center bg-gray-700/50 border border-gray-600 text-white font-bold py-3 rounded-lg hover:bg-gray-600/50 transition-colors">Selecionar Plano</button>
-                    </div>
-                    <div class="premium-card p-8 rounded-2xl relative flex flex-col reveal border-red-500/50" style="transition-delay: 150ms;">
-                         <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-highlight-red text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Mais Popular</div>
-                        <h3 class="text-3xl font-bold highlight-red">Prata</h3>
-                        <p class="text-gray-400 mb-6">O melhor custo-benefício.</p>
-                        <div class="text-5xl font-black text-white mb-6">230c<span class="text-lg font-medium text-gray-400">/trimestre</span></div>
-                        <ul class="space-y-4 text-gray-300 flex-grow">
-                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Todos os benefícios do Bronze</li>
-<li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Proridade no atendimento</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>2 Matérias completas/mês</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Divulgação em stories</li>
-                        </ul>
-                        <button data-plan="Prata" class="selecionar-plano mt-8 block w-full text-center bg-highlight-red text-white font-bold py-3 rounded-lg hover:opacity-90 transition-opacity">Selecionar Plano</button>
-                    </div>
-                    <div class="premium-card p-8 rounded-2xl flex flex-col reveal" style="transition-delay: 300ms;">
-                        <h3 class="text-3xl font-bold highlight-red">Ouro</h3>
-                        <p class="text-gray-400 mb-6">Visibilidade e exclusividade máximas.</p>
-                        <div class="text-5xl font-black text-white mb-6">820c<span class="text-lg font-medium text-gray-400">/ano</span></div>
-                        <ul class="space-y-4 text-gray-300 flex-grow">
-                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Todos os benefícios do Prata</li>
-<li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Proridade no atendimento</li>
-<li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Eventos em conjunto</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>4 Matérias completas/mês</li>
-                            <li class="flex items-center"><svg class="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Painel de informações fixo</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Banner rotativo no site</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Cargo Ouro no Discord</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Postagem de nova parceria</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>2 matérias por semana</li>
+                            <li class="flex items-start text-red-400"><svg class="w-5 h-5 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><span class="font-bold">Solicitação de coberturas ilimitadas</span></li>
                         </ul>
                         <button data-plan="Ouro" class="selecionar-plano mt-8 block w-full text-center bg-gray-700/50 border border-gray-600 text-white font-bold py-3 rounded-lg hover:bg-gray-600/50 transition-colors">Selecionar Plano</button>
                     </div>
+
+                    <!-- Plano Safira -->
+                    <div class="premium-card safira-card p-8 rounded-2xl relative flex flex-col reveal border-2 border-blue-500/50" style="transition-delay: 150ms; transform: scale(1.02);">
+                         <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Mais Popular</div>
+                        <h3 class="text-3xl font-bold" style="color: #60A5FA; text-shadow: 0 0 15px rgba(96, 165, 250, 0.5);">Safira</h3>
+                        <p class="text-gray-400 mb-6">O melhor custo-benefício estratégico.</p>
+                         <div class="mb-6">
+                            <span class="text-5xl font-black text-white">230c</span>
+                            <span class="text-lg font-medium text-gray-400">/trimestre</span>
+                            <p class="text-base text-gray-500 font-normal mt-1">(ou R$ 45,99)</p>
+                        </div>
+                        <ul class="space-y-4 text-gray-300 flex-grow">
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Matéria completa sob demanda</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>2 divulgações individuais</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Tag Safira no Discord</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Publicação da história da organização</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Prioridade de suporte</li>
+                             <li class="flex items-start text-red-400"><svg class="w-5 h-5 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><span class="font-bold">Solicitação de coberturas ilimitadas</span></li>
+                        </ul>
+                        <button data-plan="Safira" class="selecionar-plano mt-8 block w-full text-center bg-blue-500 text-white font-bold py-3 rounded-lg hover:opacity-90 transition-opacity">Selecionar Plano</button>
+                    </div>
+                    
+                    <!-- Plano Rubi -->
+                    <div class="premium-card p-8 rounded-2xl flex flex-col reveal" style="transition-delay: 300ms;">
+                        <div class="relative">
+                            <h3 class="text-3xl font-bold" style="color: #F87171; text-shadow: 0 0 15px rgba(248, 113, 113, 0.5);">Rubi</h3>
+                            <div class="absolute top-0 right-0 bg-green-500/20 text-green-300 border border-green-400/30 text-xs font-bold px-2 py-1 rounded-full">+2 MESES BÔNUS</div>
+                        </div>
+                        <p class="text-gray-400 mb-6">Parceria premium para máxima exclusividade.</p>
+                         <div class="mb-6">
+                            <span class="text-5xl font-black text-white">820c</span>
+                            <span class="text-lg font-medium text-gray-400">/ano</span>
+                            <p class="text-base text-gray-500 font-normal mt-1">(ou R$ 163,99)</p>
+                        </div>
+                        <ul class="space-y-4 text-gray-300 flex-grow">
+                            <li class="flex items-start font-bold"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Todos os benefícios anteriores</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Reunião de alinhamento estratégico</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Fila de prioridade máxima</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Divulgações individuais por mês</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>2 matérias completas sob demanda</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Posicionamento premium no site</li>
+                            <li class="flex items-start"><svg class="w-5 h-5 text-green-400 mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Personalizado (a consultar com a diretoria)</li>
+                            <li class="flex items-start text-red-400"><svg class="w-5 h-5 mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg><span class="font-bold">Solicitação de coberturas ilimitadas</span></li>
+                        </ul>
+                        <button data-plan="Rubi" class="selecionar-plano mt-8 block w-full text-center bg-gray-700/50 border border-gray-600 text-white font-bold py-3 rounded-lg hover:bg-gray-600/50 transition-colors">Selecionar Plano</button>
+                    </div>
+
                 </div>
             </div>
         </section>
+
 
         <!-- Seção de Opções Avulsas -->
         <section id="avulsos" class="py-24 relative z-10">
@@ -370,7 +402,7 @@
                         <div class="grid md:grid-cols-3 gap-4 items-center bg-gray-800/50 p-4 rounded-lg">
                             <span class="font-bold text-white">Story Personalizado</span>
                             <span class="text-gray-300 text-sm">Um story de divulgação no Instagram e Discord</span>
-                            <span class="font-bold text-lg text-right highlight-red">90c</span>
+                            <span class="font-bold text-lg text-right highlight-red">25c</span>
                         </div>
                          <!-- Item -->
                         <div class="grid md:grid-cols-3 gap-4 items-center bg-gray-800/50 p-4 rounded-lg">
@@ -438,7 +470,7 @@
                             <input type="text" id="contato-social" name="contato-social" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500/50 transition-colors" required>
                         </div>
                         <div class="mb-6">
-                            <label for="observacao" class="block text-gray-300 mb-2 font-bold">Observação (opcional)</label>
+                            <label for="observacao" class="block text-gray-300 mb-2 font-bold">Observação (Plano de interesse)</label>
                             <textarea id="observacao" name="observacao" rows="4" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500/50 transition-colors"></textarea>
                         </div>
                         <div class="text-center">
@@ -480,8 +512,7 @@
         const canvas = document.getElementById('preloader-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        let mouse = { x: null, y: null, radius: 100 };
-
+        
         function setupCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -506,28 +537,14 @@
                 ctx.fill();
             }
             update() {
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                let forceDirectionX = dx / distance;
-                let forceDirectionY = dy / distance;
-                let maxDistance = mouse.radius;
-                let force = (maxDistance - distance) / maxDistance;
-                let directionX = (forceDirectionX * force * this.density);
-                let directionY = (forceDirectionY * force * this.density);
-
-                if (distance < mouse.radius) {
-                    this.x -= directionX;
-                    this.y -= directionY;
-                } else {
-                    if (this.x !== this.baseX) {
-                        let dx = this.x - this.baseX;
-                        this.x -= dx / 10;
-                    }
-                    if (this.y !== this.baseY) {
-                        let dy = this.y - this.baseY;
-                        this.y -= dy / 10;
-                    }
+                // Efeito de retorno suave
+                if (this.x !== this.baseX) {
+                    let dx = this.x - this.baseX;
+                    this.x -= dx / 10;
+                }
+                if (this.y !== this.baseY) {
+                    let dy = this.y - this.baseY;
+                    this.y -= dy / 10;
                 }
             }
         }
@@ -545,8 +562,8 @@
             const textCoordinates = ctx.getImageData(0, 0, canvas.width, canvas.height);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            for (let y = 0, y2 = textCoordinates.height; y < y2; y++) {
-                for (let x = 0, x2 = textCoordinates.width; x < x2; x++) {
+            for (let y = 0; y < textCoordinates.height; y += 4) {
+                for (let x = 0; x < textCoordinates.width; x += 4) {
                     if (textCoordinates.data[(y * 4 * textCoordinates.width) + (x * 4) + 3] > 128) {
                         particles.push(new Particle(x, y));
                     }
@@ -586,29 +603,28 @@
         setupBgCanvas();
 
         function animateBg() {
-            let grad1 = bgCtx.createLinearGradient(0, 0, bgCanvas.width, bgCanvas.height);
-            grad1.addColorStop(0, '#1a0000');
-            grad1.addColorStop(1, '#0A0A0A');
-
-            let grad2 = bgCtx.createLinearGradient(0, bgCanvas.height, bgCanvas.width, 0);
-            grad2.addColorStop(0, '#3d0f0f');
-            grad2.addColorStop(1, '#0A0A0A');
-            
             bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
             
             bgCtx.globalCompositeOperation = 'source-over';
-            bgCtx.fillStyle = grad1;
+            bgCtx.fillStyle = '#0A0A0A';
             bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
 
             bgCtx.globalCompositeOperation = 'lighter';
             
-            let x = bgCanvas.width / 2 + Math.sin(time * 0.001) * bgCanvas.width * 0.3;
-            let y = bgCanvas.height / 2 + Math.cos(time * 0.0012) * bgCanvas.height * 0.3;
-            
-            let grad3 = bgCtx.createRadialGradient(x, y, 0, x, y, bgCanvas.width * 0.5);
-            grad3.addColorStop(0, 'rgba(155, 44, 44, 0.2)');
-            grad3.addColorStop(1, 'rgba(155, 44, 44, 0)');
-            bgCtx.fillStyle = grad3;
+            let x1 = bgCanvas.width / 2 + Math.sin(time * 0.001) * bgCanvas.width * 0.4;
+            let y1 = bgCanvas.height / 2 + Math.cos(time * 0.0012) * bgCanvas.height * 0.4;
+            let grad1 = bgCtx.createRadialGradient(x1, y1, 0, x1, y1, bgCanvas.width * 0.6);
+            grad1.addColorStop(0, 'rgba(155, 44, 44, 0.15)');
+            grad1.addColorStop(1, 'rgba(155, 44, 44, 0)');
+            bgCtx.fillStyle = grad1;
+            bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+            let x2 = bgCanvas.width / 2 + Math.cos(time * 0.0008) * bgCanvas.width * 0.3;
+            let y2 = bgCanvas.height / 2 + Math.sin(time * 0.0015) * bgCanvas.height * 0.3;
+            let grad2 = bgCtx.createRadialGradient(x2, y2, 0, x2, y2, bgCanvas.width * 0.4);
+            grad2.addColorStop(0, 'rgba(100, 20, 20, 0.1)');
+            grad2.addColorStop(1, 'rgba(100, 20, 20, 0)');
+            bgCtx.fillStyle = grad2;
             bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
 
             time++;
@@ -666,17 +682,6 @@
         }, { threshold: 0.1 });
         scrollElements.forEach(el => observer.observe(el));
 
-        // --- BRILHO INTERATIVO NOS CARDS ---
-        const cards = document.querySelectorAll('.premium-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--x', `${x}px`);
-                card.style.setProperty('--y', `${y}px`);
-            });
-        });
 
         // --- FORMULÁRIO E BOTÕES DE PLANO ---
         const contactForm = document.getElementById('contact-form');
