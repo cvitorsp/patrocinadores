@@ -487,6 +487,10 @@
                                 <option value="Serviço Avulso / Personalizado">Serviço Avulso / Personalizado</option>
                             </select>
                         </div>
+                        <div class="mb-6">
+                            <label for="observacao" class="block text-gray-300 mb-2 font-bold">Observações (opcional)</label>
+                            <textarea id="observacao" name="observacao" rows="3" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-red-500/50 transition-colors" placeholder="Alguma dúvida ou informação adicional?"></textarea>
+                        </div>
                         <div class="text-center">
                             <button type="submit" class="w-full bg-highlight-red text-white font-bold py-4 px-8 rounded-lg hover:opacity-90 transition-all transform hover:scale-105 flex items-center justify-center">
                                 Enviar Solicitação
@@ -640,7 +644,6 @@
                 ctx.fill();
             }
             update() {
-                // Efeito de retorno suave
                 if (this.x !== this.baseX) {
                     let dx = this.x - this.baseX;
                     this.x -= dx / 10;
@@ -654,9 +657,7 @@
 
         function initParticles() {
             particles = [];
-            if (canvas.width <= 0 || canvas.height <= 0) {
-                return;
-            }
+            if (canvas.width <= 0 || canvas.height <= 0) return;
             ctx.fillStyle = 'white';
             ctx.font = 'bold 120px Inter';
             ctx.textAlign = 'center';
@@ -664,7 +665,6 @@
             ctx.fillText('R1', canvas.width / 2, canvas.height / 2);
             const textCoordinates = ctx.getImageData(0, 0, canvas.width, canvas.height);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             for (let y = 0; y < textCoordinates.height; y += 4) {
                 for (let x = 0; x < textCoordinates.width; x += 4) {
                     if (textCoordinates.data[(y * 4 * textCoordinates.width) + (x * 4) + 3] > 128) {
@@ -675,9 +675,7 @@
         }
 
         function animatePreloader() {
-            if (particles.length === 0 && canvas.width > 0) {
-                initParticles();
-            }
+            if (particles.length === 0 && canvas.width > 0) initParticles();
             if (!preloader.classList.contains('loaded')) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 for (let i = 0; i < particles.length; i++) {
@@ -689,31 +687,23 @@
         }
 
         animatePreloader();
-        
-        setTimeout(() => {
-            preloader.classList.add('loaded');
-        }, 2500);
+        setTimeout(() => preloader.classList.add('loaded'), 2500);
 
-        // --- NOVO FUNDO "GRADIENTE VIVO" ---
+        // --- FUNDO "GRADIENTE VIVO" ---
         const bgCanvas = document.getElementById('background-canvas');
         const bgCtx = bgCanvas.getContext('2d');
         let time = 0;
-        
         function setupBgCanvas() {
             bgCanvas.width = window.innerWidth;
             bgCanvas.height = window.innerHeight;
         }
         setupBgCanvas();
-
         function animateBg() {
             bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-            
             bgCtx.globalCompositeOperation = 'source-over';
             bgCtx.fillStyle = '#0A0A0A';
             bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
-
             bgCtx.globalCompositeOperation = 'lighter';
-            
             let x1 = bgCanvas.width / 2 + Math.sin(time * 0.001) * bgCanvas.width * 0.4;
             let y1 = bgCanvas.height / 2 + Math.cos(time * 0.0012) * bgCanvas.height * 0.4;
             let grad1 = bgCtx.createRadialGradient(x1, y1, 0, x1, y1, bgCanvas.width * 0.6);
@@ -721,7 +711,6 @@
             grad1.addColorStop(1, 'rgba(155, 44, 44, 0)');
             bgCtx.fillStyle = grad1;
             bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
-
             let x2 = bgCanvas.width / 2 + Math.cos(time * 0.0008) * bgCanvas.width * 0.3;
             let y2 = bgCanvas.height / 2 + Math.sin(time * 0.0015) * bgCanvas.height * 0.3;
             let grad2 = bgCtx.createRadialGradient(x2, y2, 0, x2, y2, bgCanvas.width * 0.4);
@@ -729,7 +718,6 @@
             grad2.addColorStop(1, 'rgba(100, 20, 20, 0)');
             bgCtx.fillStyle = grad2;
             bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
-
             time++;
             requestAnimationFrame(animateBg);
         }
@@ -738,7 +726,6 @@
         // --- FOGUETE DE SCROLL ---
         const rocket = document.getElementById('scroll-rocket');
         let rocketHasFlown = false;
-
         window.addEventListener('scroll', () => {
             const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
             if (scrollPercent > 0.05 && !rocketHasFlown) {
@@ -747,7 +734,6 @@
             }
         }, { passive: true });
 
-
         // --- ANIMAÇÃO DE TEXTO ---
         const animatedTitles = document.querySelectorAll('.animated-title');
         const titleObserver = new IntersectionObserver((entries) => {
@@ -755,23 +741,18 @@
                 if (entry.isIntersecting) {
                     const title = entry.target;
                     if (title.classList.contains('is-animated')) return;
-
                     title.classList.add('is-animated');
                     const text = title.textContent;
-                    const chars = text.split('').map(char => `<span>${char === ' ' ? '&nbsp;' : char}</span>`).join('');
-                    title.innerHTML = chars;
-                    const spans = title.querySelectorAll('span');
-                    spans.forEach((span, index) => {
+                    title.innerHTML = text.split('').map(char => `<span>${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+                    title.querySelectorAll('span').forEach((span, index) => {
                         const isSecondLine = title.parentElement.children.length > 1 && title === title.parentElement.children[1];
-                        const delay = isSecondLine ? 0.4 : 0;
-                        span.style.animationDelay = `${delay + (index * 0.035)}s`;
+                        span.style.animationDelay = `${(isSecondLine ? 0.4 : 0) + (index * 0.035)}s`;
                     });
                     titleObserver.unobserve(title);
                 }
             });
         }, { threshold: 0.5 });
         animatedTitles.forEach(title => titleObserver.observe(title));
-
 
         // --- SCROLL REVEAL ---
         const scrollElements = document.querySelectorAll('.reveal');
@@ -785,7 +766,6 @@
         }, { threshold: 0.1 });
         scrollElements.forEach(el => observer.observe(el));
 
-
         // --- FORMULÁRIO E BOTÕES DE PLANO ---
         const contactForm = document.getElementById('contact-form');
         const successOverlay = document.getElementById('submission-success');
@@ -794,16 +774,13 @@
         
         selecionarPlanoButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const planName = button.dataset.plan; // "Ouro", "Safira", "Rubi"
-                
-                // Itera sobre as opções do select para encontrar a correspondente
+                const planName = button.dataset.plan;
                 for (let i = 0; i < planoSelect.options.length; i++) {
                     if (planoSelect.options[i].text.includes(planName)) {
                         planoSelect.value = planoSelect.options[i].value;
                         break;
                     }
                 }
-                
                 document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
                 planoSelect.focus();
             });
@@ -811,28 +788,33 @@
 
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-
             const submitButton = contactForm.querySelector('button[type="submit"]');
             const originalButtonText = submitButton.innerHTML;
             submitButton.disabled = true;
-            submitButton.innerHTML = `
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Enviando...
-            `;
+            submitButton.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Enviando...`;
             
             const webhookUrl = "https://discord.com/api/webhooks/1415098626883059895/c9tmd_QLmAXNgppQ0ZyDbWhgOLL7XEo_-kppXMKgGU2MNHAgiOSJJpE6_rJ3AdyesknR";
-            
             const formData = new FormData(contactForm);
             const data = {
                 nome: formData.get('nome'),
                 instituicao: formData.get('instituicao'),
                 email: formData.get('email'),
                 contatoSocial: formData.get('contato-social'),
-                plano: formData.get('plano-interesse')
+                plano: formData.get('plano-interesse'),
+                observacao: formData.get('observacao').trim()
             };
+
+            const embedFields = [
+                { name: "👤 Nome no Jogo", value: data.nome, inline: true },
+                { name: "🏢 Instituição", value: data.instituicao, inline: true },
+                { name: "✨ Plano de Interesse", value: `**${data.plano}**`, inline: false },
+                { name: "📧 E-mail", value: `||${data.email}||`, inline: false },
+                { name: "📱 WhatsApp/Discord", value: `||${data.contatoSocial}||`, inline: false }
+            ];
+
+            if (data.observacao) {
+                embedFields.push({ name: "📝 Observações", value: data.observacao, inline: false });
+            }
 
             const payload = {
                 username: "Jornal R1 - Patrocínios",
@@ -840,33 +822,22 @@
                 embeds: [{
                     title: "Nova Solicitação de Patrocínio! 🚀",
                     description: `Recebemos uma nova solicitação de **${data.instituicao}**.`,
-                    color: 15021886, // Cor #E53E3E em decimal
-                    fields: [
-                        { name: "👤 Nome no Jogo", value: data.nome, inline: true },
-                        { name: "🏢 Instituição", value: data.instituicao, inline: true },
-                        { name: "✨ Plano de Interesse", value: `**${data.plano}**`, inline: false },
-                        { name: "📧 E-mail", value: `||${data.email}||`, inline: false },
-                        { name: "📱 WhatsApp/Discord", value: `||${data.contatoSocial}||`, inline: false }
-                    ],
-                    footer: {
-                        text: "Formulário enviado do site Jornal R1"
-                    },
+                    color: 15021886,
+                    fields: embedFields,
+                    footer: { text: "Formulário enviado do site Jornal R1" },
                     timestamp: new Date().toISOString()
                 }]
             };
 
             fetch(webhookUrl, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
             })
             .then(response => {
                 if (response.ok) {
                     successOverlay.classList.remove('hidden');
                     setTimeout(() => successOverlay.classList.add('visible'), 10);
-                    
                     setTimeout(() => {
                         successOverlay.classList.remove('visible');
                         setTimeout(() => {
@@ -894,12 +865,7 @@
                 const href = this.getAttribute('href');
                 if (href && href.length > 1) {
                     e.preventDefault();
-                    const targetElement = document.querySelector(href);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
+                    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
@@ -908,28 +874,19 @@
         const termsModal = document.getElementById('terms-modal');
         const openTermsBtn = document.getElementById('open-terms-modal');
         const closeTermsBtn = document.getElementById('close-terms-modal');
-
         const openModal = () => {
             termsModal.classList.add('visible');
             document.body.style.overflow = 'hidden';
         };
-
         const closeModal = () => {
             termsModal.classList.remove('visible');
             document.body.style.overflow = '';
         };
-
-        openTermsBtn.addEventListener('click', (e) => {
-            openModal();
-        });
-
+        openTermsBtn.addEventListener('click', openModal);
         closeTermsBtn.addEventListener('click', closeModal);
         termsModal.addEventListener('click', (e) => {
-            if (e.target === termsModal) {
-                closeModal();
-            }
+            if (e.target === termsModal) closeModal();
         });
-
 
         // --- AJUSTE DE CANVAS NO RESIZE ---
         window.addEventListener('resize', () => {
